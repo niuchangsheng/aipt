@@ -28,10 +28,11 @@ graph TD
     Company_Layer --> Market_Layer
     
     L1 & L2 & L3 & L4 & L5 & L6 --> F[基本面 F]
-    F --> PricingFormula["价格动能 P = (F - E) * T + M"]
-    L7 --> E
-    L9 --> T
-    L8 --> M
+    L7 --> E[预期 E]
+    L9 --> T[时间相位 T]
+    L8 --> M[资金放大器 M]
+    
+    F & E & T & M --> PricingFormula["价格动能 P = (F - E) * T + M"]
 ```
 
 ---
