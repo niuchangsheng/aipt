@@ -9,8 +9,8 @@ TICKERS = {
 RISK_FREE_RATE_SYMBOL = "^TNX"
 
 WEIGHTS = {
-    "ADI": 0.35,
-    "CEPI": -0.25,
+    "RDI": 0.35,
+    "CPI": -0.25,
     "LPI": -0.25,
     "PCI": -0.15
 }
