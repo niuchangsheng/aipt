@@ -23,7 +23,7 @@
 
 ### 1. 净值曲线 — AIPT vs SPY
 
-![AIPT Portfolio NAV vs SPY Benchmark](/home/chang/.gemini/antigravity/brain/f0c8def9-1096-4642-aae8-074b75787c6d/01_nav_curve.png)
+![AIPT Portfolio NAV vs SPY Benchmark](../backtest_output/01_nav_curve.png)
 
 关键观察：
 - **2025-01 DeepSeek 事件**：组合与基准同步下跌，但此时怀疑期仓位（L2 已降至 25%）缓冲了部分冲击
@@ -32,7 +32,7 @@
 
 ### 2. 仓位配比变化
 
-![Allocation History](/home/chang/.gemini/antigravity/brain/f0c8def9-1096-4642-aae8-074b75787c6d/02_allocation_history.png)
+![Allocation History](../backtest_output/02_allocation_history.png)
 
 两次关键换仓：
 1. **2025-01** (Phase 1→2)：进攻配比 60% (L1 35% + L2 25%)，保留进攻弹性
@@ -40,7 +40,7 @@
 
 ### 3. 核心指标演变
 
-![Indicator Evolution](/home/chang/.gemini/antigravity/brain/f0c8def9-1096-4642-aae8-074b75787c6d/03_indicator_evolution.png)
+![Indicator Evolution](../backtest_output/03_indicator_evolution.png)
 
 CPI-MQI **剪刀差**（浅红填充区）持续扩大，完美验证了 Phase 2 效率审判的核心逻辑。
 
@@ -50,9 +50,9 @@ CPI-MQI **剪刀差**（浅红填充区）持续扩大，完美验证了 Phase 2
 
 | 文件 | 作用 |
 |:---|:---|
-| [backtest_data.py](file:///home/chang/aipt/backtest_data.py) | 季度指标数据 + 相位配比映射 |
-| [backtest_engine.py](file:///home/chang/aipt/backtest_engine.py) | 回测引擎核心（yfinance 拉取 + 逐日模拟） |
-| [backtest_report.py](file:///home/chang/aipt/backtest_report.py) | 3 张 matplotlib 图表生成 |
-| [run_backtest.py](file:///home/chang/aipt/run_backtest.py) | 入口脚本 |
+| [backtest_data.py](../backtest_data.py) | 季度指标数据 + 相位配比映射 |
+| [backtest_engine.py](../backtest_engine.py) | 回测引擎核心（yfinance 拉取 + 逐日模拟） |
+| [backtest_report.py](../backtest_report.py) | 3 张 matplotlib 图表生成 |
+| [run_backtest.py](../run_backtest.py) | 入口脚本 |
 
 运行：`cd /home/chang/aipt && source .venv/bin/activate && python run_backtest.py`
