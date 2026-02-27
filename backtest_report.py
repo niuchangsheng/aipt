@@ -16,7 +16,7 @@ import pandas as pd
 plt.rcParams["font.family"] = ["DejaVu Sans", "SimHei", "WenQuanYi Micro Hei", "sans-serif"]
 plt.rcParams["axes.unicode_minus"] = False
 
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "backtest_output")
+BASE_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "backtest_output")
 
 # 配色方案
 COLORS = {
@@ -41,20 +41,24 @@ PHASE_COLORS = {
 }
 
 
-def generate_backtest_report(results: dict):
+def generate_backtest_report(results: dict, subdir: str = None):
     """生成完整的回测报告图表"""
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    if subdir:
+        output_dir = os.path.join(BASE_OUTPUT_DIR, subdir)
+    else:
+        output_dir = BASE_OUTPUT_DIR
+    os.makedirs(output_dir, exist_ok=True)
 
     print("\n🎨 正在生成可视化报告...")
 
-    _plot_nav_curve(results)
-    _plot_allocation_area(results)
-    _plot_indicator_evolution(results)
+    _plot_nav_curve(results, output_dir)
+    _plot_allocation_area(results, output_dir)
+    _plot_indicator_evolution(results, output_dir)
 
-    print(f"\n✅ 所有图表已保存到 {OUTPUT_DIR}/")
+    print(f"\n✅ 所有图表已保存到 {output_dir}/")
 
 
-def _plot_nav_curve(results: dict):
+def _plot_nav_curve(results: dict, output_dir: str):
     """图1: 净值曲线 + 相位背景 + 关键事件标注"""
     fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -148,13 +152,13 @@ def _plot_nav_curve(results: dict):
             zorder=10)
 
     fig.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "01_nav_curve.png")
+    path = os.path.join(output_dir, "01_nav_curve.png")
     fig.savefig(path, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"   📊 净值曲线图 → {path}")
 
 
-def _plot_allocation_area(results: dict):
+def _plot_allocation_area(results: dict, output_dir: str):
     """图2: 仓位配比堆叠面积图"""
     fig, ax = plt.subplots(figsize=(16, 6))
 
@@ -203,13 +207,13 @@ def _plot_allocation_area(results: dict):
     fig.autofmt_xdate()
 
     fig.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "02_allocation_history.png")
+    path = os.path.join(output_dir, "02_allocation_history.png")
     fig.savefig(path, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"   📊 仓位配比图 → {path}")
 
 
-def _plot_indicator_evolution(results: dict):
+def _plot_indicator_evolution(results: dict, output_dir: str):
     """图3: 核心指标演变 + 相位时间线"""
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(16, 10),
                                     gridspec_kw={"height_ratios": [3, 1]},
@@ -278,7 +282,7 @@ def _plot_indicator_evolution(results: dict):
     ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
 
     fig.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "03_indicator_evolution.png")
+    path = os.path.join(output_dir, "03_indicator_evolution.png")
     fig.savefig(path, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"   📊 指标演变图 → {path}")

@@ -75,9 +75,13 @@ def compute_layer_returns(closes: pd.DataFrame) -> pd.DataFrame:
     return layer_returns
 
 
-def run_backtest() -> dict:
+def run_backtest(start_date: str = None, end_date: str = None) -> dict:
     """
     执行回测主逻辑。
+
+    参数:
+        start_date: 回测起始日期 (默认使用 backtest_data 中的 BACKTEST_START)
+        end_date: 回测结束日期 (默认使用 backtest_data 中的 BACKTEST_END)
 
     返回:
         dict 包含:
@@ -88,12 +92,17 @@ def run_backtest() -> dict:
         - quarterly_data: 季度数据
         - stats: 统计摘要 dict
     """
+    if start_date is None:
+        start_date = BACKTEST_START
+    if end_date is None:
+        end_date = BACKTEST_END
+
     closes = fetch_all_prices()
     layer_returns = compute_layer_returns(closes)
 
     # 过滤回测区间
-    bt_start = pd.Timestamp(BACKTEST_START)
-    bt_end = pd.Timestamp(BACKTEST_END)
+    bt_start = pd.Timestamp(start_date)
+    bt_end = pd.Timestamp(end_date)
     mask = (layer_returns.index >= bt_start) & (layer_returns.index <= bt_end)
     layer_returns = layer_returns.loc[mask].copy()
 

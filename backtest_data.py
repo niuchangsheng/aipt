@@ -1,6 +1,6 @@
 """
 AIPT 回测数据模块
-包含 README 中 2024 Q4 - 2025 Q4 的季度指标数据，作为回测信号源。
+包含 README 中 2023 Q4 - 2025 Q4 的季度指标数据，作为回测信号源。
 """
 
 from dataclasses import dataclass
@@ -34,14 +34,66 @@ class QuarterData:
 
 
 # ── 从 README 提取的季度数据 ──────────────────────────────────────────────
-# 回测区间: 2025-01-01 → 2026-02-27
-# 使用 2024 Q4 数据作为初始仓位建立依据
+# 回测区间: 2024-04-01 → 2026-02-27
+# 使用 2023 Q4 数据作为初始仓位建立依据
 
 QUARTERLY_DATA: List[QuarterData] = [
-    # 2024 Q4 — 作为回测起始仓位依据（Phase 1→2 过渡）
+    # 2023 Q4 — Phase 1 巅峰（作为回测起始仓位依据）
+    QuarterData(
+        quarter="2023Q4",
+        effective_date="2024-04-01",   # 回测起始日
+        capex_growth=22, revenue_growth=13,
+        cloud_growth=28, dc_growth=206,
+        margin_change=3, fcf_growth=15,
+        rate_10y=3.9, rate_change=-0.7,
+        nvda_vs_200ma="Above",
+        cpi=9, rdi=117, mqi=18, lpi=-0.7, pci=50,
+        phase="Phase 1",
+        phase_label="🟢 Phase 1 巅峰"
+    ),
+    # 2024 Q1 — Phase 1 持续
+    QuarterData(
+        quarter="2024Q1",
+        effective_date="2024-07-01",
+        capex_growth=30, revenue_growth=14,
+        cloud_growth=30, dc_growth=262,
+        margin_change=2, fcf_growth=20,
+        rate_10y=4.3, rate_change=0.4,
+        nvda_vs_200ma="Above",
+        cpi=16, rdi=146, mqi=22, lpi=0.4, pci=50,
+        phase="Phase 1",
+        phase_label="🟢 Phase 1 军备竞赛"
+    ),
+    # 2024 Q2 — Phase 1 军备竞赛高潮
+    QuarterData(
+        quarter="2024Q2",
+        effective_date="2024-10-01",
+        capex_growth=42, revenue_growth=15,
+        cloud_growth=29, dc_growth=122,
+        margin_change=3, fcf_growth=25,
+        rate_10y=4.3, rate_change=0.0,
+        nvda_vs_200ma="Above",
+        cpi=27, rdi=76, mqi=28, lpi=0.0, pci=50,
+        phase="Phase 1",
+        phase_label="🟢 Phase 1 军备竞赛高潮"
+    ),
+    # 2024 Q3 — Phase 1 末期
+    QuarterData(
+        quarter="2024Q3",
+        effective_date="2025-01-02",
+        capex_growth=55, revenue_growth=14,
+        cloud_growth=33, dc_growth=94,
+        margin_change=1, fcf_growth=15,
+        rate_10y=4.2, rate_change=-0.1,
+        nvda_vs_200ma="Above",
+        cpi=41, rdi=64, mqi=16, lpi=-0.1, pci=50,
+        phase="Phase 1",
+        phase_label="🟢 Phase 1 末期"
+    ),
+    # 2024 Q4 — Phase 1→2 过渡
     QuarterData(
         quarter="2024Q4",
-        effective_date="2025-01-02",   # 回测起始日
+        effective_date="2025-04-01",
         capex_growth=63, revenue_growth=14,
         cloud_growth=31, dc_growth=78,
         margin_change=1, fcf_growth=10,
@@ -54,7 +106,7 @@ QUARTERLY_DATA: List[QuarterData] = [
     # 2025 Q1 — 继续过渡，MQI 首次转负
     QuarterData(
         quarter="2025Q1",
-        effective_date="2025-04-01",
+        effective_date="2025-07-01",
         capex_growth=63, revenue_growth=13,
         cloud_growth=32, dc_growth=69,
         margin_change=0, fcf_growth=-5,
@@ -67,7 +119,7 @@ QUARTERLY_DATA: List[QuarterData] = [
     # 2025 Q2 — 正式进入 Phase 2
     QuarterData(
         quarter="2025Q2",
-        effective_date="2025-07-01",
+        effective_date="2025-10-01",
         capex_growth=72, revenue_growth=14,
         cloud_growth=33, dc_growth=52,
         margin_change=-1, fcf_growth=-20,
@@ -80,7 +132,7 @@ QUARTERLY_DATA: List[QuarterData] = [
     # 2025 Q3 — Phase 2 持续
     QuarterData(
         quarter="2025Q3",
-        effective_date="2025-10-01",
+        effective_date="2026-01-02",
         capex_growth=78, revenue_growth=14,
         cloud_growth=35, dc_growth=44,
         margin_change=-1, fcf_growth=-10,
@@ -90,10 +142,10 @@ QUARTERLY_DATA: List[QuarterData] = [
         phase="Phase 2",
         phase_label="🟠 Phase 2 — 分化持续"
     ),
-    # 2025 Q4 — Phase 2 深化
+    # 2025 Q4 — Phase 2 深化（数据尚未完全披露，基于指引预估）
     QuarterData(
         quarter="2025Q4",
-        effective_date="2026-01-02",
+        effective_date="2026-04-01",  # 超出回测结束日，不会触发
         capex_growth=100, revenue_growth=16,
         cloud_growth=38, dc_growth=55,
         margin_change=-2, fcf_growth=-15,
@@ -136,6 +188,6 @@ LAYER_TICKERS = {
 BENCHMARK_TICKER = "SPY"
 
 # 回测时间范围
-BACKTEST_START = "2025-01-02"
+BACKTEST_START = "2024-04-01"
 BACKTEST_END = "2026-02-27"
-DATA_FETCH_START = "2024-06-01"  # 提前拉取以计算 200MA 等
+DATA_FETCH_START = "2023-06-01"  # 提前拉取以计算 200MA 等
